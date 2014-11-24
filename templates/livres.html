@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>Livres:</h1>
+<ul>
+    <table border="1">
+        <tr>
+            <td>ISBN</td>
+            <td>titre</td>
+            <td>auteur</td>
+            <td>nombrePage</td>
+            <td>prix</td>
+            <td>categorie</td>
+            <td>rating</td>
+            <td>datePublication</td>
+        </tr>
+    {% for livre in livres %}
+        <tr>
+            <td>{{ livre[0] }}</td>
+            <td>{{ livre[1] }}</td>
+            <td>{{ livre[2] }}</td>
+            <td>{{ livre[3] }}</td>
+            <td>{{ livre[4] }}</td>
+            <td>{{ livre[5] }}</td>
+            <td>{{ livre[6] }}</td>
+            <td>{{ livre[7] }}</td>
+
+            <td>
+                <form action ="livre/delete" method="POST">
+                    <input type="submit" name="remove" value="remove" />
+                    <input type="hidden" name="ISBN" value="{{ livre[0] }}" />
+                </form>
+            </td>
+
+            <td><button>modifier</button></td>
+        </tr>
+    {% endfor %}
+    </table>
+</ul>
+</body>
+</html>
+
+
+<!--
+db.query('select * from users;')
+
+r = db.use_result()
+
+while True:
+    record = r.fetch_row()
+    if not record:
+        break
+    print record[0][0]
+
+-->

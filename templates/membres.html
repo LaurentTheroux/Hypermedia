@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h1>Membres:</h1>
+<ul>
+    <table border="1">
+        <tr>
+            <td>username</td>
+            <td>password</td>
+            <td>nom</td>
+            <td>prenom</td>
+            <td>courriel</td>
+            <td>codePostal</td>
+            <td>adresse</td>
+            <td>permission</td>
+            <td>dette</td>
+        </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[2] }}</td>
+            <td>{{ user[3] }}</td>
+            <td>{{ user[4] }}</td>
+            <td>{{ user[5] }}</td>
+            <td>{{ user[6] }}</td>
+            <td>{{ user[7] }}</td>
+            <td>{{ user[8] }}</td>
+            <td><button>remove</button></td>
+            <td><button>modifier</button></td>
+        </tr>
+    {% endfor %}
+    </table>
+</ul>
+</body>
+</html>
+
+
+<!--
+db.query('select * from users;')
+
+r = db.use_result()
+
+while True:
+    record = r.fetch_row()
+    if not record:
+        break
+    print record[0][0]
+
+-->

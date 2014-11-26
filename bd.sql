@@ -4,7 +4,7 @@ USE bookstore;
 --
 -- Table structure for table `achat`
 --
-drop table achat;
+drop table if exists achat;
 CREATE TABLE IF NOT EXISTS `achat` (
   `UserID` int(11) DEFAULT NULL,
   `LivreID` int(11) DEFAULT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `achat` (
 --
 -- Table structure for table `emprunt`
 --
-drop table emprunt;
+drop table if exists emprunt;
 CREATE TABLE IF NOT EXISTS `emprunt` (
   `UserID` int(11) NOT NULL,
   `LivreID` int(11) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `emprunt` (
 --
 -- Table structure for table `livre`
 --
-drop table livre;
+drop table if exists livre;
 CREATE TABLE IF NOT EXISTS `livre` (
   `ISBN` varchar(255) NOT NULL UNIQUE,
   `titre` varchar(255) NOT NULL,
@@ -75,7 +75,7 @@ VALUES(
 --
 -- Table structure for table `reservation`
 --
-drop table reservation;
+drop table if exists reservation;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `Type` varchar(255) NOT NULL,
   `UserID` int(11) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 -- Table structure for table `reservation`
 --
-drop table reservation;
+drop table if exists reservation;
 CREATE TABLE IF NOT EXISTS `reservation` (
   `Type` varchar(255) NOT NULL,
   `UserID` int(11) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 --
 -- Table structure for table `user`
 --
-drop table user;
+drop table if exists user;
 CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,

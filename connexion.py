@@ -1,3 +1,3 @@
-import sqlite3
+import MySQLdb
 
-db = sqlite3.connect('db.sqlite')
+db = MySQLdb.connect(user='root', passwd='root', db='bookstore', host='localhost')

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<form action ="/membres/{{user[0]}}/modification" method="POST">
+    Username: <input type='text' name='username' value="{{user[0]}}"><br>
+    Password: <input type='text' name='password' value="{{user[1]}}"><br>
+    Nom: <input type='text' name='nom' value="{{user[2]}}"><br>
+    Prenom: <input type='text' name='prenom' value="{{user[3]}}"><br>
+    Courriel: <input type='text' name='courriel' value="{{user[4]}}"><br>
+    CodePostal: <input type='text' name='codePostal' value="{{user[5]}}"><br>
+    Adresse: <input type='text' name='adresse' value="{{user[6]}}"><br>
+    Permission: <input type='text' name='permission' value="{{user[7]}}"><br>
+    Dette: <input type='text' name='dette' value="{{user[8]}}"><br>
+    <input type="submit" value="Modifier"/>
+</form>
+{% endblock %}
+

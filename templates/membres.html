@@ -25,8 +25,17 @@
             <td>{{ user[6] }}</td>
             <td>{{ user[7] }}</td>
             <td>{{ user[8] }}</td>
-            <td><button>remove</button></td>
-            <td><button>modifier</button></td>
+            <td>
+                <form action ="membres/delete" method="POST">
+                    <input type="submit" name="remove" value="remove" />
+                    <input type="hidden" name="username" value="{{ user[0] }}" />
+                </form>
+            </td>
+            <td>
+                <form action="/membres/{{ user[0] }}" method="GET">
+                    <input type="submit" value="Modifier" />
+                </form>
+            </td>
         </tr>
     {% endfor %}
     </table>

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<form action ="/livre/ajout" method="POST">
+    Titre: <input type='text' name='titre' ><br>
+    Auteur <input type='text' name='auteur' ><br>
+    Nombre de pages: <input type='text' name='nombrePage' ><br>
+    Prix: <input type='text' name='prix' ><br>
+    Categorie: <input type='text' name='categorie' ><br>
+    Rating: <input type='text' name='rating' ><br>
+    Date de publication: <input type='text' name='datePublication' ><br>
+    <input type="submit" value="Modifier"/>
+</form>
+{% endblock %}

@@ -47,6 +47,23 @@ def membre_modification(username):
     user.execute(update)
     return flask.redirect('/membres')
 
+
+@app.route('/livre', methods=['GET'])
+def livre():
+    return render_template('livre.html')
+
+@app.route('/livre/ajout', methods=['POST'])
+def livre_ajout():
+    ajout = db.cursor()
+    ajout.execute(
+        "insert into livre(ISBN, titre, auteur, nombrePage, prix, categorie, rating, datePublication) "
+        "values(5,'%(titre)s','%(auteur)s','%(nombrePage)s',"
+        "'%(prix)s','%(categorie)s','%(rating)s','%(datePublication)s')"
+        % request.values
+    )
+    db.commit()
+    return "Nouveau livre ajouter <a href='/'>OK</a>"
+
 @app.route('/membres', methods=['GET'])
 def membres_get():
     users = db.cursor()

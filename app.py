@@ -56,8 +56,8 @@ def livre():
 def livre_ajout():
     ajout = db.cursor()
     ajout.execute(
-        "insert into livre(ISBN, titre, auteur, nombrePage, prix, categorie, rating, datePublication) "
-        "values(5,'%(titre)s','%(auteur)s','%(nombrePage)s',"
+        "insert into livre(titre, auteur, nombrePage, prix, categorie, rating, datePublication) "
+        "values('%(titre)s','%(auteur)s','%(nombrePage)s',"
         "'%(prix)s','%(categorie)s','%(rating)s','%(datePublication)s')"
         % request.values
     )

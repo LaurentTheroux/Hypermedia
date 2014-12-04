@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+   <h1>Livres:</h1>
+<ul>
+    <table border="1">
+        <tr>
+            <td>ISBN</td>
+            <td>titre</td>
+            <td>auteur</td>
+            <td>nombrePage</td>
+            <td>prix</td>
+            <td>categorie</td>
+            <td>rating</td>
+            <td>datePublication</td>
+        </tr>
+    {% for livre in livres %}
+        <tr>
+            <td>{{ livre[0] }}</td>
+            <td>{{ livre[1] }}</td>
+            <td>{{ livre[2] }}</td>
+            <td>{{ livre[3] }}</td>
+            <td>{{ livre[4] }}</td>
+            <td>{{ livre[5] }}</td>
+            <td>{{ livre[6] }}</td>
+            <td>{{ livre[7] }}</td>
+
+            <td>
+                <form action ="/panier/ajout" method="GET">
+                    <input type="submit" value="Ajout" />
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</ul>
+
+{% endblock %}

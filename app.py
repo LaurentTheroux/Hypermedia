@@ -12,9 +12,58 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
+@app.route('/livres/Enfants', methods=['GET'])
+def livres_Enfants():
+    livres = db.cursor()
+    livres.execute("select * from livre where categorie='%s'" % "Enfant")
+    return render_template('enfant.html', livres=livres)
+
+
+@app.route('/livres/Cuisine', methods=['GET'])
+def livres_Cuisine():
+    livres = db.cursor()
+    livres.execute("select * from livre where categorie='%s'" % "Cuisine")
+    return render_template('cuisine.html', livres=livres)
+
+
+@app.route('/livres/Ecole', methods=['GET'])
+def livres_Ecole():
+    livres = db.cursor()
+    livres.execute("select * from livre where categorie='%s'" % "Ecole")
+    return render_template('ecole.html', livres=livres)
+
+
+@app.route('/livres/Sciencefiction', methods=['GET'])
+def livres_Sciencefiction():
+    livres = db.cursor()
+    livres.execute("select * from livre where categorie='%s'" % "Sciencefiction")
+    return render_template('sciencefiction.html', livres=livres)
+
+
+@app.route('/panier/ajout', methods=['POST'])
+def panier_ajout():
+    ajoutpanier = db.cursor()
+    ajoutpanier.execute(
+        "insert into panier(username, ISBN) "
+        "values('%(username)s','%(ISBN)s'" % request.values)
+    db.commit()
+    return flask.redirect('/panier')
+
+
+@app.route('/panier', methods=['POST'])
+def panier():
+    panier = db.cursor()
+    panier.execute(
+        "Select * from panier where username='%s'" % "roger")
+    db.commit()
+    return render_template("panier.html", panier=panier)
+
+
 @app.route('/register', methods=['GET'])
 def register_get():
     return render_template('register.html')
+
 
 @app.route('/register', methods=['POST'])
 def register_post():
@@ -26,6 +75,7 @@ def register_post():
     )
     db.commit()
     return "Registration reussie <a href='/'>OK</a>"
+
 
 @app.route('/membres/<username>', methods=['GET'])
 def membre_get(username):
@@ -52,6 +102,7 @@ def membre_modification(username):
 def livre():
     return render_template('livre.html')
 
+
 @app.route('/livre/ajout', methods=['POST'])
 def livre_ajout():
     ajout = db.cursor()
@@ -63,6 +114,7 @@ def livre_ajout():
     )
     db.commit()
     return "Nouveau livre ajouter <a href='/'>OK</a>"
+
 
 @app.route('/membres', methods=['GET'])
 def membres_get():
@@ -87,6 +139,7 @@ def livres_delete():
     db.commit()
 
     return flask.redirect('/livres')
+
 
 @app.route('/membres/delete', methods=['POST'])
 def membres_delete():

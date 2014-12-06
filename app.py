@@ -2,15 +2,34 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import session
 import flask
 from connexion import db
 
 app = Flask(__name__)
-
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    error = None
+    if request.method == 'POST':
+        userpass = db.cursor()
+        userpass.execute("select password from user where username ='%s'" % request.form['username'])
+        pwd = userpass.fetchone()
+        if request.form['password'] == pwd[0]:
+            session["username"] = request.form['username']
+            return render_template('Welcome.html', username=request.form['username'])
+        else:
+            error = pwd[0]
+            return render_template('index.html', error=error)
+    # the code below is executed if the request method
+    # was GET or the credentials were invalid
+
 
 
 @app.route('/livres/Enfants', methods=['GET'])
@@ -41,23 +60,46 @@ def livres_Sciencefiction():
     return render_template('sciencefiction.html', livres=livres)
 
 
-@app.route('/panier/ajout', methods=['POST'])
+@app.route('/livres/panier/ajout', methods=['POST'])
 def panier_ajout():
+    error = None
     ajoutpanier = db.cursor()
-    ajoutpanier.execute(
-        "insert into panier(username, ISBN) "
-        "values('%(username)s','%(ISBN)s'" % request.values)
-    db.commit()
-    return flask.redirect('/panier')
+    ajoutpanier.execute("Select * from panier where ISBN='%s'" % request.form['ISBN'])
+    if ajoutpanier.fetchone() is None:
+        itempanier = {'username': session['username'],'ISBN': request.form['ISBN'], 'Quantite': '1'}
+        ajoutpanier.execute(
+        "insert into panier(username, ISBN, Quantite) "
+        "values('%(username)s','%(ISBN)s', '%(Quantite)s')" % itempanier)
+        db.commit()
+    else:
+        itempanier = {'username': session['username'],'ISBN': request.form['ISBN']}
+        ajoutpanier.execute("Select Quantite from livre where ISBN='%s'" %request.form['ISBN'])
+        quantiteEnStock = ajoutpanier.fetchone()[0]
+        ajoutpanier.execute("Select Quantite from panier where username='%(username)s' AND ISBN='%(ISBN)s'" % itempanier)
+        quantiteEnPanier = ajoutpanier.fetchone()[0]
+
+        if quantiteEnStock > quantiteEnPanier:
+            ajoutpanier.execute("Update panier SET quantite=quantite+1 where username='%(username)s' AND ISBN='%(ISBN)s'" % itempanier )
+            db.commit();
+        else:
+            error = "Votre panier contient tous les exemplaires en stock"
 
 
-@app.route('/panier', methods=['POST'])
+    return flask.redirect('/livres/panier')
+
+
+@app.route('/livres/panier', methods=['GET'])
 def panier():
     panier = db.cursor()
     panier.execute(
-        "Select * from panier where username='%s'" % "roger")
+        "Select ISBN from panier where username='%s'" % session['username'])
+    listeLivres = panier.fetchall();
+    listePanier =[]
+    for i in range(0, len(listeLivres)):
+        panier.execute("Select * from livre where ISBN='%s'" % listeLivres[i][0])
+        listePanier.append(panier.fetchone())
     db.commit()
-    return render_template("panier.html", panier=panier)
+    return render_template('panier.html', listePanier=listePanier)
 
 
 @app.route('/register', methods=['GET'])
@@ -107,9 +149,9 @@ def livre():
 def livre_ajout():
     ajout = db.cursor()
     ajout.execute(
-        "insert into livre(titre, auteur, nombrePage, prix, categorie, rating, datePublication) "
+        "insert into livre(titre, auteur, nombrePage, prix, categorie, quantite, datePublication) "
         "values('%(titre)s','%(auteur)s','%(nombrePage)s',"
-        "'%(prix)s','%(categorie)s','%(rating)s','%(datePublication)s')"
+        "'%(prix)s','%(categorie)s','%(quantite)s','%(datePublication)s')"
         % request.values
     )
     db.commit()

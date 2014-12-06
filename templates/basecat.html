@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
    <h1>Livres:</h1>
+{% if error%}
+    <p class="error"><strong>Error: </strong> {{ error }}
+{% endif %}
 <ul>
     <table border="1">
         <tr>
@@ -10,7 +13,7 @@
             <td>nombrePage</td>
             <td>prix</td>
             <td>categorie</td>
-            <td>rating</td>
+            <td>quantite</td>
             <td>datePublication</td>
         </tr>
     {% for livre in livres %}
@@ -25,8 +28,9 @@
             <td>{{ livre[7] }}</td>
 
             <td>
-                <form action ="/panier/ajout" method="GET">
+                <form action ="panier/ajout" method="POST">
                     <input type="submit" value="Ajout" />
+                    <input type="hidden" name="ISBN" value="{{ livre[0] }}" />
                 </form>
             </td>
         </tr>

@@ -1,38 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
-   <h1>Livres:</h1>
+   <h1>{{ titre }}</h1>
 {% if error%}
     <p class="error"><strong>Error: </strong> {{ error }}
 {% endif %}
 <ul>
-    <table border="1">
-        <tr>
-            <td>ISBN</td>
-            <td>titre</td>
-            <td>auteur</td>
-            <td>nombrePage</td>
-            <td>prix</td>
-            <td>categorie</td>
-            <td>quantite</td>
-            <td>datePublication</td>
+    <table class="table">
+        <tr class="info">
+            <th>ISBN</th>
+            <th>titre</th>
+            <th>auteur</th>
+            <th>nombrePage</th>
+            <th>prix</th>
+            <th>categorie</th>
+            <th>quantite</th>
+            <th>datePublication</th>
+
         </tr>
     {% for livre in livres %}
         <tr>
-            <td>{{ livre[0] }}</td>
-            <td>{{ livre[1] }}</td>
-            <td>{{ livre[2] }}</td>
-            <td>{{ livre[3] }}</td>
-            <td>{{ livre[4] }}</td>
-            <td>{{ livre[5] }}</td>
-            <td>{{ livre[6] }}</td>
-            <td>{{ livre[7] }}</td>
+            <td class="success">{{ livre[0] }}</td>
+            <td class="success">{{ livre[1] }}</td>
+            <td class="success">{{ livre[2] }}</td>
+            <td class="success">{{ livre[3] }}</td>
+            <td class="success">{{ livre[4] }} $</td>
+            <td class="success">{{ livre[5] }}</td>
+            <td class="success">{{ livre[6] }}</td>
+            <td class="success">{{ livre[7] }}</td>
 
-            <td>
+            <th>
                 <form action ="panier/ajout" method="POST">
                     <input type="submit" value="Ajout" />
                     <input type="hidden" name="ISBN" value="{{ livre[0] }}" />
                 </form>
-            </td>
+            </th>
         </tr>
     {% endfor %}
     </table>

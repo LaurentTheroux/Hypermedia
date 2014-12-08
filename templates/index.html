@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 {% if error%}
-    <p class="error"><strong>Error: </strong> {{ error }}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+{{ error }}
+</div>
 {% endif %}
+
+{% if session['username'] %}
+{% else %}
 <form action="/login" method="POST">
   Username: <input type="text" name="username" size="15" /><br />
   Password: <input type="password" name="password" size="15" /><br />
-    <input type="submit" value="Login" />
+    <input class="btn btn-default" type="submit" value="Login" />
 </form>
-<h3>Choisissez un livre par categorie!</h3>
-<a href="livres/Enfants">Enfants</a>
-<br>
-<a href="/livres/Sciencefiction">Science-Fiction</a>
-<br>
-<a href="/livres/Ecole">Ecole</a>
-<br>
-<a href="/livres/Cuisine">Cuisine</a>
-
+{% endif %}
 {% endblock %}

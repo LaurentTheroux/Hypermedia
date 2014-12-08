@@ -2,42 +2,45 @@
 {% block content %}
 <h1>Livres:</h1>
 <ul>
-    <table border="1">
-        <tr>
-            <td>ISBN</td>
-            <td>titre</td>
-            <td>auteur</td>
-            <td>nombrePage</td>
-            <td>prix</td>
-            <td>categorie</td>
-            <td>quantite</td>
-            <td>datePublication</td>
+    <table class="table">
+         <tr class="info">
+            <th>ISBN</td>
+            <th>titre</td>
+            <th>auteur</td>
+            <th>nombrePage</td>
+            <th>prix</td>
+            <th>categorie</td>
+            <th>quantite</td>
+            <th>datePublication</td>
         </tr>
     {% for livre in livres %}
         <tr>
-            <td>{{ livre[0] }}</td>
-            <td>{{ livre[1] }}</td>
-            <td>{{ livre[2] }}</td>
-            <td>{{ livre[3] }}</td>
-            <td>{{ livre[4] }}</td>
-            <td>{{ livre[5] }}</td>
-            <td>{{ livre[6] }}</td>
-            <td>{{ livre[7] }}</td>
+            <td class="success">{{ livre[0] }}</td>
+            <td class="success">{{ livre[1] }}</td>
+            <td class="success">{{ livre[2] }}</td>
+            <td class="success">{{ livre[3] }}</td>
+            <td class="success">{{ livre[4] }} $</td>
+            <td class="success">{{ livre[5] }}</td>
+            <td class="success">{{ livre[6] }}</td>
+            <td class="success">{{ livre[7] }}</td>
 
-            <td>
+            <th>
                 <form action ="livre/delete" method="POST">
-                    <input type="submit" name="remove" value="remove" />
+                    <button type="submit" class="btn btn-warning">Remove</button>
                     <input type="hidden" name="ISBN" value="{{ livre[0] }}" />
                 </form>
-            </td>
-
-            <td><button>modifier</button></td>
+            </th>
+            <th>
+                <form action="/livres/{{ livre[0] }}" method="GET">
+                    <button type="submit" class="btn btn-info">Modifier</button>
+                </form>
+            </th>
         </tr>
     {% endfor %}
     </table>
 </ul>
 <form action ="/livre" method="GET">
-    <input type="submit" value="Ajout" />
+    <input class="btn btn-success" type="submit" value="Ajouter un livre" />
 </form>
 {% endblock %}
 <!--

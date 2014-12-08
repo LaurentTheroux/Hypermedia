@@ -2,44 +2,47 @@
 {% block content %}
 <h1>Membres:</h1>
 <ul>
-    <table border="1">
-        <tr>
-            <td>username</td>
-            <td>password</td>
-            <td>nom</td>
-            <td>prenom</td>
-            <td>courriel</td>
-            <td>codePostal</td>
-            <td>adresse</td>
-            <td>permission</td>
-            <td>dette</td>
+    <table class="table">
+        <tr class="info">
+            <th>username</td>
+            <th>password</td>
+            <th>nom</td>
+            <th>prenom</td>
+            <th>courriel</td>
+            <th>codePostal</td>
+            <th>adresse</td>
+            <th>permission</td>
+            <th>solde</td>
         </tr>
     {% for user in users %}
         <tr>
-            <td>{{ user[0] }}</td>
-            <td>{{ user[1] }}</td>
-            <td>{{ user[2] }}</td>
-            <td>{{ user[3] }}</td>
-            <td>{{ user[4] }}</td>
-            <td>{{ user[5] }}</td>
-            <td>{{ user[6] }}</td>
-            <td>{{ user[7] }}</td>
-            <td>{{ user[8] }}</td>
-            <td>
+            <td class="success">{{ user[0] }}</td>
+            <td class="success">{{ user[1] }}</td>
+            <td class="success">{{ user[2] }}</td>
+            <td class="success">{{ user[3] }}</td>
+            <td class="success">{{ user[4] }}</td>
+            <td class="success">{{ user[5] }}</td>
+            <td class="success">{{ user[6] }}</td>
+            <td class="success">{{ user[7] }}</td>
+            <td class="success">{{ user[8] }}$</td>
+            <th>
                 <form action ="membres/delete" method="POST">
-                    <input type="submit" name="remove" value="remove" />
+                    <button type="submit" class="btn btn-warning">Remove</button>
                     <input type="hidden" name="username" value="{{ user[0] }}" />
                 </form>
-            </td>
-            <td>
+            </th>
+            <th>
                 <form action="/membres/{{ user[0] }}" method="GET">
-                    <input type="submit" value="Modifier" />
+                    <button type="submit" class="btn btn-info">Modifier</button>
                 </form>
-            </td>
+            </th>
         </tr>
     {% endfor %}
     </table>
 </ul>
+<form action ="/register" method="GET">
+    <input class="btn btn-success" type="submit" value="Ajouter un membre" />
+</form>
 {% endblock %}
 <!--
 db.query('select * from users;')

@@ -180,7 +180,7 @@ def register_get():
 @app.route('/register', methods=['POST'])
 def register_post():
     registration = db.cursor()
-    if session['permission'] == 'admin':
+    if 'permission' in session.keys() and session['permission'] == 'admin':
          registration.execute(
         "insert into user(username, password, nom, prenom, courriel, codePostal, adresse, permission, solde) "
         "values('%(username)s','%(password)s','%(nom)s','%(prenom)s','%(courriel)s','%(codePostal)s','%(adresse)s',%(permission)s, 0)"
@@ -188,10 +188,10 @@ def register_post():
     else:
          registration.execute(
              "insert into user(username, password, nom, prenom, courriel, codePostal, adresse, permission, solde)"+
-             "values('%(username)s','%(password)s','%(nom)s','%(prenom)s','%(courriel)s','%(codePostal)s','%(adresse)s',1, 0) " % request.values)
+             "values('%(username)s','%(password)s','%(nom)s','%(prenom)s','%(courriel)s','%(codePostal)s','%(adresse)s',2, 0) " % request.values)
          db.commit()
 
-    return " <div  class='alert alert-success'><a href='/'><strong><span class='glyphicon glyphicon-ok'></span> Success! Enregistrement reussi.</strong></div>"
+    return render_template('loginsuccess.html')
 
 
 @app.route('/membres/<username>', methods=['GET'])

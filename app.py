@@ -25,7 +25,7 @@ def login():
             userpass = db.cursor()
             userpass.execute("select password from user where username ='%s'" % request.form['username'])
             pwd = userpass.fetchone()
-            if request.form['password'] == pwd[0]:
+            if pwd is not None and request.form['password'] == pwd[0]:
                 session["username"] = request.form['username']
                 userpermission = db.cursor()
                 userpermission.execute("Select permission from user where username ='%s'" % session['username'])
@@ -35,7 +35,7 @@ def login():
                     session['permission'] = "user"
                 return render_template('index.html', message="Bienvenue, %s" % request.form['username'])
             else:
-                error = pwd[0]
+                error = "Echec de connexion"
                 return render_template('index.html', error=error)
 
 

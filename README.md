@@ -1,7 +1,7 @@
 Hypermedia
 ==========
 
-Le site chiant dhypermedia...
+Le site dhypermedia...
 
 Reminder:
 
